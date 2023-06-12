@@ -92,7 +92,7 @@ def filterCol(df):
     # Range-based ZIP Code fuctionality
     minZip = input("Enter the minimum ZIP code to include : ")
     maxZip = input("Enter the maximum ZIP code to include : ")
-    df = df[(df['Zip'] >= minZip) & (df['Zip'] <= maxZip)]
+    df = df[(df['Zip1'] >= minZip) & (df['Zip1'] <= maxZip)]
     
     return df
 
