@@ -6,16 +6,16 @@ Created on Sat Jun 10 19:04:31 2023
 """
 
 '''
-Initial Idea: Website Scraper for SBIR.gov contracts recently awarded.
+Initial Idea : Website Scraper for SBIR.gov contracts recently awarded.
 Pulls Contract Name & ID, Company Name & Address and outputs a .CSV file.
 
-Goal: Overall goal is to discover relatively local "Small Business" 
+Goal : Overall goal is to discover relatively local "Small Business" 
 engineering companies that are potentially hiring.
 
-After Exploring The Site: SBIR.gov award data can be downloaded
+After Exploring The Site : SBIR.gov award data can be downloaded
 with or without award abstracts as a .CSV
 
-New Plan: Download the current award data .CSV file (w/o abstracts),
+New Plan : Download the current award data .CSV file (w/o abstracts),
 provide the local filepath, process the file and output a filtered 
 version of the file as a .CSV.
 '''
@@ -45,7 +45,6 @@ dataPath = input("Provide the local filepath to the award_data_no_abstract.csv f
 
 # Imports Data File and prepares for processing
 def importer(dataPath):
-    
     # Read the .CSV file into a dataframe
     df = pd.read_csv(dataPath, low_memory=False)
     return df
@@ -64,7 +63,6 @@ def deleteCol(df):
 # Applies filter/s to specified column. 
 # Filter/s listed are kept. Everything else is removed
 def filterCol(df):
-    
     df = df[df['Program']=='SBIR']
     df = df[df['State']=='CA']
     
@@ -81,16 +79,21 @@ def filterCol(df):
     #df = df[(df['Zip1']=='92128') | (df['Zip1']=='92064')]
 
     # List of ZIP Codes to be kept (No need to be any sort of ordered list)
-    zipList = ['92128','92064','92129','92021','92081','92121']
+    #zipList = ['92128','92064','92129','92021','92081','92121']
     '''
     Next improvement could be enabling the specification of a min and max 
     range of zipcodes so that, for example, only 92021 and 92129 would need
     to be provided to cover all of the codes in the above list to get results
     identical to the current.
     '''
-    
     # A more scalable, adaptive version of the ZIP code filter
-    df = df[df.Zip1.isin(zipList)]
+    #df = df[df.Zip1.isin(zipList)]
+    
+    # Range-based ZIP Code fuctionality
+    minZip = input("Enter the minimum ZIP code to include : ")
+    maxZip = input("Enter the maximum ZIP code to include : ")
+    df = df[(df['Zip'] >= minZip) & (df['Zip'] <= maxZip)]
+    
     return df
 
 # Create and export the resulting processed .CSV   
